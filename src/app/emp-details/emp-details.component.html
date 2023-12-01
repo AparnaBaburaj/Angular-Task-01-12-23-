@@ -1,0 +1,34 @@
+
+
+  <div>
+    <div class="bx-buttons"> 
+    <button (click)="fetchAllDetails()">Get All Details</button>
+    <label for="recordId">Enter Record ID:</label>
+    <input type="text" id="recordId" [(ngModel)]="singleRecordId" />
+    <button (click)="fetchSingleRecord()">Get Single Record</button>
+ 
+</div>
+    <ng-container *ngIf="!displaySingleRecord; else singleRecordTemplate">
+      <ul>
+        <li *ngFor="let record of records">
+          {{ record.name }} - {{ record.email }}
+          <!-- Display more fields as needed -->
+        </li>
+      </ul>
+     
+    </ng-container>
+  
+    <ng-template #singleRecordTemplate>
+      <div>
+    
+        <p>Name: {{ singleRecord.name }}</p>
+        <p>Email: {{ singleRecord.email }}</p>
+        <p>Website: {{ singleRecord.website }}</p>
+        <p>Phone: {{ singleRecord.phone }}</p>
+        <!-- Display more fields as needed -->
+        <button (click)="fetchAllDetails()">Back to All Records</button>
+      </div>
+    </ng-template>
+    
+   
+  </div>
