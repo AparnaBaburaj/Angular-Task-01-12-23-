@@ -27,6 +27,17 @@
         <p>Phone: {{ singleRecord.phone }}</p>
         <!-- Display more fields as needed -->
         <button (click)="fetchAllDetails()">Back to All Records</button>
+
+        <button (click)="deleteRecord(singleRecordId)">Delete Record</button>
+    <br>
+        <input type="text" id="updatedField" [(ngModel)]="updatedData.name" placeholder="New Field Value" />
+        <button (click)="updateRecord(singleRecordId, updatedData)">Update Record</button>
+        
+        <br>
+        <input type="text" id="patchedField" [(ngModel)]="updatedData.id" placeholder="New Field Value" />
+        <button (click)="patchRecord(singleRecordId, updatedData)">Patch Record</button>
+      
+    
       </div>
     </ng-template>
     

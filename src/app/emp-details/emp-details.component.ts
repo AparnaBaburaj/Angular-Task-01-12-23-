@@ -5,6 +5,7 @@ import { HttpClient,HttpClientModule } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SeviceService } from '../sevice.service';
+import { response } from 'express';
 
 @Component({
   selector: 'app-emp-details',
@@ -20,6 +21,7 @@ export class EmpDetailsComponent implements OnInit{
   displaySingleRecord: boolean = false;
   singleRecordId: string = '';
   singleRecord: any;
+  updatedData:any={};
 
   constructor(private http: HttpClient) { }
 
@@ -49,5 +51,39 @@ export class EmpDetailsComponent implements OnInit{
           console.error('Error fetching single record', error);
         });
     }
+  }
+
+  deleteRecord(recordId: string): void {
+    this.http.delete(`https://jsonplaceholder.typicode.com/users/${recordId}`)
+      .subscribe(() => {
+        console.log('Record deleted successfully',recordId);
+        this.fetchAllDetails(); // Refresh the list after deletion
+      }, error => {
+        //console.error('Error deleting record', error);
+        console.log('error');
+      });
+  }
+
+  updateRecord(recordId: string, updatedData: any): void {
+    this.http.put(`https://jsonplaceholder.typicode.com/users/${recordId}`, updatedData)
+      .subscribe(() => {
+        console.log('Record updated successfully',updatedData);
+        this.fetchAllDetails(); // Refresh the list after update
+      }, error => {
+        //console.error('Error updating record', error);
+        console.log('error');
+
+      });
+  }
+
+  patchRecord(recordId: string, updatedData: any): void {
+    this.http.patch(`https://jsonplaceholder.typicode.com/users/${recordId}`, updatedData)
+      .subscribe(() => {
+        console.log('Record patched successfully',recordId,updatedData);
+        this.fetchAllDetails(); // Refresh the list after patch
+      }, error => {
+        //console.error('Error patching record', error);
+        console.log('error');
+      });
   }
 }
